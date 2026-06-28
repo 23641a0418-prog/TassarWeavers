@@ -11,9 +11,13 @@
   --font-sans: "Plus Jakarta Sans", Inter, sans-serif;
 }
 
+html { scroll-behavior: smooth; }
+
 body {
   margin: 0;
   padding: 0;
+  background-color: #FDF2F2; /* Light Red Background */
+  color: #4A3E3D;            /* Earthy brown text remains for readability */
   font-family: 'Plus Jakarta Sans', sans-serif;
   overflow-x: hidden;
 }
