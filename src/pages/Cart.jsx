@@ -123,7 +123,7 @@ export default function Cart() {
               <div key={item.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-tassar-raw/20 pb-4 last:border-b-0 last:pb-0 gap-4">
                 <div className="flex items-center gap-4 text-left">
                   <div className="w-16 h-16 bg-tassar-cream border border-tassar-raw/30 flex items-center justify-center overflow-hidden shrink-0">
-                    {item.images && item.images[0] ? <img src={item.images[0]} className="w-full h-full object-cover" /> : <FiShoppingBag className="text-tassar-raw/60" />}
+                    {item.images && item.images[0] ? <img src={item.images[0]} className="w-full h-full object-contain" /> : <FiShoppingBag className="text-tassar-raw/60" />}
                   </div>
                   <div>
                     <h4 className="font-display text-base font-bold text-black">{item.name}</h4>

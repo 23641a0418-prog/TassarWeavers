@@ -95,7 +95,7 @@ export default function ProductDetail() {
           <div className="lg:col-span-7 xl:col-span-7 space-y-4">
             <div className="w-full aspect-[4/3] bg-white border border-tassar-raw/30 relative shadow-sm overflow-hidden group flex items-center justify-center">
               {hasImages ? (
-                <img src={imagesArray[activeImageIdx]} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                <img src={imagesArray[activeImageIdx]} alt={product.name} className="w-full h-full object-contain transition-transform duration-500 hover:scale-105" />
               ) : (
                 <div className="text-neutral-300 font-mono text-xs uppercase tracking-widest">No Media Available</div>
               )}
@@ -118,7 +118,7 @@ export default function ProductDetail() {
                       activeImageIdx === idx ? 'border-tassar-madderRed ring-2 ring-tassar-madderRed/10 scale-95' : 'border-tassar-raw/30 opacity-70 hover:opacity-100'
                     }`}
                   >
-                    <img src={imgUrl} alt="" className="w-full h-full object-cover" />
+                    <img src={imgUrl} alt="" className="w-full h-full object-contain" />
                   </button>
                 ))}
               </div>

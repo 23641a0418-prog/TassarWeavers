@@ -141,7 +141,7 @@ export default function Shop() {
                       <div className="w-full aspect-[4/3] bg-tassar-cream border border-tassar-raw/20 relative overflow-hidden flex items-center justify-center mb-3">
                         {imagesArray.length > 0 ? (
                           <>
-                            <img src={imagesArray[currentSlide]} className="w-full h-full object-cover" alt={product.name} />
+                            <img src={imagesArray[currentSlide]} className="w-full h-full object-contain" alt={product.name} />
                             {imagesArray.length > 1 && (
                               <>
                                 <button onClick={(e) => handlePrevSlide(e, product.id, imagesArray.length)} className="absolute left-1 md:left-2 p-1 rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity z-10 text-xs md:text-base"><FiChevronLeft /></button>
