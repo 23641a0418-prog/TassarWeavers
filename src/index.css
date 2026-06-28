@@ -12,16 +12,21 @@
   --font-display: "Playfair Display", Georgia, serif;
   --font-sans: "Plus Jakarta Sans", Inter, sans-serif;
 }
-
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: #FBF9F5; /* tassar.cream */
+  background-image: url('/weaveing__tassarcolny_20260629_000807_826.jpg'); /* Your cocoon image */
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
   color: #4A3E3D;            /* tassar.earth */
   font-family: 'Plus Jakarta Sans', sans-serif;
   overflow-x: hidden;
+}
+  
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
