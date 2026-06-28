@@ -1,5 +1,2 @@
-import Home from './Home'; // Or './pages/Home' depending on where you put it
-
-export default function App() {
-  return <Home />;
-}
+import Home from './Home';
+export default function App() { return <Home />; }
