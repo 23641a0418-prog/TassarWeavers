@@ -12,6 +12,7 @@
   --font-display: "Playfair Display", Georgia, serif;
   --font-sans: "Plus Jakarta Sans", Inter, sans-serif;
 }
+
 html {
   scroll-behavior: smooth;
 }
@@ -22,17 +23,15 @@ body {
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  color: #4A3E3D;
+  color: #4A3E3D;            /* tassar.earth */
   font-family: 'Plus Jakarta Sans', sans-serif;
   overflow-x: hidden;
-  }
-  
 }
-  
-}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
