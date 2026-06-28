@@ -29,7 +29,7 @@ export default function Navbar() {
           {/* BRAND TEXT LOGO LINK */}
           <div className="flex-shrink-0">
             <Link to="/" className="font-display text-xl font-bold tracking-[0.15em] text-black hover:text-tassar-madderRed transition-colors">
-              SIDDESHWARA HANDLOOMS<span className="text-tassar-deepGold font-light">WEAVERS SOCIETY</span>
+              SIDDESHWARA <span className="text-tassar-deepGold font-light">HWS</span>
             </Link>
           </div>
 
