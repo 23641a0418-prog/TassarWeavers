@@ -1,14 +1,17 @@
   return (
     <div className="relative min-h-screen w-full">
-      {/* THIS IS THE PERMANENT BACKGROUND LAYER */}
+      {/* FORCE THE IMAGE TO STAY FIXED */}
       <div 
         className="fixed inset-0 w-full h-full -z-10 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/weaveing__tassarcolny_20260629_000807_826.jpg')" }}
+        style={{ 
+          backgroundImage: "url('/weaveing__tassarcolny_20260629_000807_826.jpg')",
+          backgroundColor: '#FBF9F5' // Fallback color
+        }}
       />
 
-      {/* YOUR CONTENT LAYER */}
-      <motion.div initial="hidden" animate="visible" exit={{ opacity: 0 }} className="bg-tassar-cream/80 backdrop-blur-sm min-h-screen">
-        {/* ... ALL YOUR PREVIOUS SECTIONS GO HERE ... */}
+      {/* WRAP ALL YOUR SECTIONS IN THIS */}
+      <motion.div initial="hidden" animate="visible" exit={{ opacity: 0 }} className="relative z-0">
+        {/* ... Paste all your existing <section> components here ... */}
       </motion.div>
     </div>
   );
