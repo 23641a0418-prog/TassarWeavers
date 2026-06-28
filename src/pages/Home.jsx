@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiArrowRight, FiMaximize2, FiHeart, FiStar, FiPhone, FiMessageSquare, FiMail, FiMapPin, FiChevronDown, FiImage, FiAward, FiCheckCircle } from 'react-icons/fi';
 import { useNavigate, Link } from 'react-router-dom';
@@ -15,7 +15,7 @@ export default function Home() {
     const syncDatabaseBanners = async () => {
       const cloudHomeLayout = await getHomeLayoutSettings();
       if (cloudHomeLayout) {
-        // Map properties from database keys (snake_case) to client variables (camelCase)
+        // Kept direct mappings to align natively with rendering arrays below
         setLayout({
           curatedTitle: cloudHomeLayout.curated_title,
           curatedSubtitle: cloudHomeLayout.curated_subtitle,
@@ -80,15 +80,19 @@ export default function Home() {
     { q: "Can I request modifications to color tones?", a: "Absolutely. While ready pieces are shipped immediately, you can use our dedicated Custom Design page to submit request guidelines if you want an entirely custom color run or specific length changes." }
   ];
 
-  // REDIRECTION TARGET MAPPING UTILITIES
+  // REDIRECTION TARGET MAPPING UTILITIES - Fixed routing to seamlessly filter categories
   const navigateToShopProduct = (productId) => {
     if (!productId) navigate('/shop');
     else navigate('/shop', { state: { highlightProductId: Number(productId) } });
   };
 
   const navigateToShopCategory = (categoryName) => {
-    if (!categoryName) navigate('/shop');
-    else navigate('/shop', { state: { autoFilterCategory: categoryName } });
+    if (!categoryName) {
+      navigate('/shop');
+    } else {
+      // Passes the clean variable state package down to Shop.jsx's active interceptor hooks
+      navigate('/shop', { state: { autoFilterCategory: categoryName } });
+    }
   };
 
   if (!layout) return <div className="min-h-screen bg-tassar-cream" />;
@@ -173,11 +177,11 @@ export default function Home() {
             className="lg:col-span-5 relative flex items-center justify-center w-full max-w-sm lg:max-w-none mx-auto"
           >
             <div className="w-full aspect-[4/5] bg-gradient-to-tr from-tassar-earth to-[#5C4E4D] p-8 md:p-12 flex flex-col justify-between text-tassar-cream relative shadow-2xl overflow-hidden border border-tassar-raw/20 group">
-            <img
-                            src={pit_loom}
-                            alt="Raw Pit Loom"
-                            className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 z-0"
-                          />
+              <img
+                src={pit_loom}
+                alt="Raw Pit Loom"
+                className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 z-0"
+              />
               <div className="absolute inset-0 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:16px_16px] opacity-20" />
 
               <div className="relative z-10 flex justify-between items-start">
@@ -227,8 +231,8 @@ export default function Home() {
 
                 <div className="relative z-20">
                   <h4 className="font-display text-2xl font-bold text-white mb-0.5">{slot.name}</h4>
-                  <p className="text-[10px] text-tassar-raw tracking-wider uppercase font-mono">Redirects to {slot.targetCategory || "All Items"}</p>
-                  <div className="mt-3 flex items-center gap-2 text-xs font-bold text-tassar-deepGold"><span>LAUNCH PROFILE HUB</span><FiArrowRight /></div>
+                  <p className="text-[10px] text-tassar-raw tracking-wider uppercase font-mono"> {slot.targetCategory || "All Items"}</p>
+                  <div className="mt-3 flex items-center gap-2 text-xs font-bold text-tassar-deepGold"><span>EXPLORE SHOP</span><FiArrowRight /></div>
                 </div>
               </div>
             ))}
@@ -283,36 +287,25 @@ export default function Home() {
       {/* 4. PRESERVING HERITAGE INTEGRATION */}
       <section className="py-16 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="border border-tassar-earth/10 p-3 bg-white/50 backdrop-blur-sm max-w-md lg:max-w-none mx-auto w-full">
-
-          {/* FIXED: Swapped dark brown bg-tassar-earth to a clean neutral bg-neutral-100 layout frame */}
           <div className="aspect-video bg-neutral-100 flex flex-col items-center justify-center p-6 text-center relative overflow-hidden group border border-tassar-raw/10 shadow-sm">
-
-            {/* FIXED: Increased opacity to 90% so the real photo details stay crisp and clean */}
             <img
               src={PHeritage}
               alt="Preserving Heritage"
               className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 z-0"
             />
-
-            {/* Darkened overlay layer to keep the white text perfectly readable over a bright image */}
             <div className="absolute inset-0 bg-black/40 z-10" />
-
             <div className="absolute inset-0 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:16px_16px] opacity-20 z-10" />
 
-            {/* Text block lifted to z-20 layer to float clearly above all adjustments */}
             <div className="relative z-20 w-full">
-                <p className="font-display italic text-sm md:text-base px-2 text-white text-center leading-relaxed font-medium drop-shadow-sm">
-                                          "Our hands weave the legacy of wild forests into premium drapes."
-                           </p>
-
+              <p className="font-display italic text-sm md:text-base px-2 text-white text-center leading-relaxed font-medium drop-shadow-sm">
+                "Our hands weave the legacy of wild forests into premium drapes."
+              </p>
               <span className="text-[10px] uppercase tracking-widest text-tassar-deepGold mt-3 font-mono block text-center font-bold">
                 — Master Weaver Cluster
               </span>
             </div>
           </div>
-
         </div>
-
 
         <div className="flex flex-col justify-center text-left">
           <span className="text-xs uppercase tracking-widest text-tassar-madderRed font-bold mb-2 block">✦ Preserving Heritage</span>
@@ -323,23 +316,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. INTERACTIVE ARTISAN QUALITY & TRUST TRUST MATRIX */}
+      {/* 5. INTERACTIVE ARTISAN QUALITY & TRUST MATRIX */}
       <section className="py-24 px-6 bg-white border-t border-b border-tassar-raw/20 overflow-hidden text-left">
         <div className="max-w-7xl mx-auto">
-
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-4 border-b border-tassar-raw/20 pb-8">
             <div>
               <span className="text-xs uppercase tracking-[0.3em] text-tassar-madderRed font-bold block">✦ UNCOMPROMISING STANDARDS</span>
               <h2 className="text-3xl md:text-5xl font-display font-bold text-black mt-2">Why TassarWeavers</h2>
             </div>
-            <p className="text-sm text-neutral-600 font-normal max-w-sm leading-relaxed">
-              Hover over or click any quality pillar card to read the deep, authentic village impact behind our premium silk ecosystem.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-            {/* LEFT PILLAR NAVIGATION STRIPS (Hover + Click Sync Enabled) */}
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {features.map((feat) => {
                 const isCurrent = selectedFeature === feat.id;
@@ -379,7 +366,6 @@ export default function Home() {
               })}
             </div>
 
-            {/* RIGHT COLUMN: STORIES ACCENT DISPLAY DRAWER */}
             <div className="lg:col-span-5 h-full lg:sticky lg:top-32">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -415,7 +401,6 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
             </div>
-
           </div>
         </div>
       </section>
@@ -467,22 +452,21 @@ export default function Home() {
       {/* 7. HIGH-END RESPONSIVE EDITORIAL FOOTER SECTION */}
       <footer className="bg-tassar-earth text-tassar-cream pt-16 pb-8 px-6 border-t border-tassar-raw/20 overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 pb-12 border-b border-white/10">
-
           <div className="lg:col-span-5 flex flex-col justify-between space-y-6 text-left">
             <div>
-              <span className="text-[10px] uppercase font-mono tracking-widest text-tassar-raw block mb-1">Heritage Storefront Hub</span>
+              <span className="text-[10px] uppercase font-mono tracking-widest text-tassar-raw block mb-1">TassarWeavers</span>
               <h2 className="font-display text-2xl md:text-3xl font-medium tracking-wide text-white">Get in Touch</h2>
               <div className="h-[2px] w-12 bg-tassar-deepGold mt-2" />
             </div>
 
             <div className="space-y-3.5 text-sm font-light">
-              <a href="tel:+919381725486" className="flex items-center gap-3 hover:text-tassar-deepGold transition-colors group py-0.5">
+              <a href="tel:+919505610080" className="flex items-center gap-3 hover:text-tassar-deepGold transition-colors group py-0.5">
                 <FiPhone className="text-tassar-raw group-hover:text-tassar-deepGold shrink-0" />
-                <span>+91 93817 25486</span>
+                <span>+91 95056 10080</span>
               </a>
 
               <a
-                href="https://wa.me/919381725486?text=Hello%20TassarWeavers,%20I'd%20like%20to%20inquire%20about%20your%20handloom%20masterpieces."
+                href="https://wa.me/919505610080?text=Hello%20TassarWeavers,%20I'd%20like%20to%20inquire%20about%20your%20handloom%20masterpieces."
                 target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-3 hover:text-tassar-deepGold transition-colors group py-0.5 text-tassar-deepGold font-medium tracking-wide underline underline-offset-4 decoration-tassar-deepGold/40"
               >
@@ -490,29 +474,28 @@ export default function Home() {
                 <span>WhatsApp Us Directly</span>
               </a>
 
-              <a href="mailto:artisan@tassarweavers.com" className="flex items-center gap-3 hover:text-tassar-deepGold transition-colors group py-0.5">
+              <a href="mailto:saiganeshmanyam18@gmail.com" className="flex items-center gap-3 hover:text-tassar-deepGold transition-colors group py-0.5">
                 <FiMail className="text-tassar-raw group-hover:text-tassar-deepGold shrink-0" />
-                <span>artisan@tassarweavers.com</span>
+                <span>saiganeshmanyam18@gmail.com</span>
               </a>
 
               <div className="flex items-start gap-3 py-0.5 leading-relaxed text-tassar-cream/80">
                 <FiMapPin className="text-tassar-raw mt-1 shrink-0" />
-                <span>Siddeswara Handlooms, Tassar Colony, Mahadevpur, Jayashankar Bhupalpally, Telangana - 505504</span>
+                <span>Manikanta Tassar Sarees, Tassar Colony, Mahadevpur, Jayashankar Bhupalpally, Telangana - 505504</span>
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-7 w-full h-[240px] sm:h-[280px] bg-white/5 border border-white/10 relative shadow-md">
             <iframe
-              title="Siddeswara Handloom Cooperative Society Location Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3778.452337451845!2d79.97562377492245!3d18.733321762641456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a32f1e51683ba73%3A0x38b673fbe9f0c279!2sSIDDESWARA%20HANDLOOM%20COOPERATIVE%20SOCIETY!5e0!3m2!1sen!2sin!4v1782052842580!5m2!1sen!2sin"
+              title="Manikanta Handlooom Tassar Sarees Location Map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3778.453616693124!2d79.97577757492245!3d18.733264562643207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a32f1002b930375%3A0xcdf79576689beb3e!2sManikanta%20Tasser%20sarees!5e0!3m2!1sen!2sin!4v1782622715701!5m2!1sen!2sin"
               className="w-full h-full border-0 opacity-85 invert-[0.92] hue-rotate-[185deg] brightness-[0.88] contrast-[1.12]"
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
-
         </div>
 
         <div className="max-w-7xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] font-mono tracking-wider text-tassar-raw">

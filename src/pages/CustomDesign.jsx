@@ -72,7 +72,7 @@ export default function CustomDesign() {
       const encodedMessage = encodeURIComponent(whatsappMessage);
 
       // 4. Define target workspace contact number
-      const whatsappNumber = "919381725486";
+      const whatsappNumber = "919505610080";
 
       // 5. Fire native browser redirect routing
       window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');

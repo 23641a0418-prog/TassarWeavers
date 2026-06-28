@@ -4,7 +4,6 @@ import { FiPlusCircle, FiTrash2, FiEdit2, FiCheck, FiX, FiBox, FiCheckCircle, Fi
 import { Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
-// ─── LIVE CLOUD DATABASE EXPORTS ─────────────────────────────────────────────
 export const getLiveCatalog = async () => {
   const { data, error } = await supabase
     .from('products')
@@ -54,7 +53,6 @@ export const uploadImageToCloud = async (file) => {
   return publicUrl;
 };
 
-// ─── MASTER MANAGEMENT SUITE COMPONENT ────────────────────────────────────────
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
@@ -66,12 +64,10 @@ export default function AdminDashboard() {
   const [orders, setOrders] = useState([]);
   const [homeLayout, setHomeLayout] = useState(null);
 
-  // Form Processing Flags
   const [isSubmittingProduct, setIsSubmittingProduct] = useState(false);
   const [isSubmittingArrival, setIsSubmittingArrival] = useState(false);
   const [isSubmittingCurated, setIsSubmittingCurated] = useState(false);
 
-  // Form Trackers
   const [newProduct, setNewProduct] = useState({ name: '', price: '', category: 'Sarees', desc: '', images: [] });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [editingId, setEditingId] = useState(null);
@@ -80,10 +76,9 @@ export default function AdminDashboard() {
   const [newArrivalInput, setNewArrivalInput] = useState({ name: '', targetProductId: '', image: '', fileObj: null });
   const [newCuratedInput, setNewCuratedInput] = useState({ name: '', targetCategory: 'Sarees', image: '', fileObj: null });
 
-  const allowedCategories = ["Sarees", "Plain Cloth", "Towels", "Dhupattas"];
+  const allowedCategories = ["Sarees", "Plain Cloth", "Shawls", "Dhoti & Pancha"];
 
   useEffect(() => {
-    // Check if user session already exists in client SDK storage cache
     const checkActiveSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
@@ -107,7 +102,6 @@ export default function AdminDashboard() {
       .order('created_at', { ascending: false });
 
     if (!orderErr && liveOrders) {
-      // Format cloud records cleanly to align with your client arrays
       const formattedOrders = liveOrders.map(o => ({
         id: o.id,
         orderId: o.order_id,
@@ -122,7 +116,7 @@ export default function AdminDashboard() {
 
   const handleAuthSubmit = async (e) => {
     e.preventDefault();
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: adminEmailInput,
       password: passwordInput,
     });
@@ -145,7 +139,6 @@ export default function AdminDashboard() {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
 
-  // 1. ADD PRODUCTS INVENTORY CHANNEL
   const handleAddProductSubmit = async (e) => {
     e.preventDefault();
     const cleanPrice = parseFloat(newProduct.price);
@@ -188,8 +181,12 @@ export default function AdminDashboard() {
   const startEditingClick = (product) => {
     setEditingId(product.id);
     setEditFormData({
-      name: product.name, price: product.price, category: product.category,
-      desc: product.description || '', images: product.images || [], inStock: product.in_stock
+      name: product.name,
+      price: product.price,
+      category: product.category,
+      desc: product.description || '',
+      images: product.images || [],
+      inStock: product.in_stock
     });
   };
 
@@ -200,7 +197,7 @@ export default function AdminDashboard() {
         name: editFormData.name,
         price: parseFloat(editFormData.price),
         category: editFormData.category,
-        description: editFormData.desc,
+        description: editFormData.desc, // Unified description pipeline alignment mapping
         in_stock: editFormData.inStock
       })
       .eq('id', productId);
@@ -221,7 +218,6 @@ export default function AdminDashboard() {
     if (!error) loadDashboardData();
   };
 
-  // 2. HOME CUSTOMIZER CHANNELS
   const handleAddArrivalSlot = async (e) => {
     e.preventDefault();
     if (!newArrivalInput.name || isSubmittingArrival) return;
@@ -364,7 +360,7 @@ export default function AdminDashboard() {
               <div><label className="block text-xs font-bold uppercase tracking-wider text-black mb-1">Product Title</label><input type="text" name="name" value={newProduct.name} onChange={handleInputChange} className="w-full bg-tassar-cream/30 border border-tassar-raw/60 p-2.5 text-xs font-bold text-black outline-none" required /></div>
               <div><label className="block text-xs font-bold uppercase tracking-wider text-black mb-1">Price (₹)</label><input type="number" name="price" value={newProduct.price} onChange={handleInputChange} className="w-full bg-tassar-cream/30 border border-tassar-raw/60 p-2.5 text-xs font-bold text-black font-mono outline-none" required /></div>
               <div><label className="block text-xs font-bold uppercase tracking-wider text-black mb-1">Display Category</label><select name="category" value={newProduct.category} onChange={handleInputChange} className="w-full bg-tassar-cream/30 border border-tassar-raw/60 p-2.5 text-xs font-bold text-black outline-none cursor-pointer">{allowedCategories.map(c => <option key={c} value={c}>{c}</option>)}</select></div>
-              <div><label className="block text-xs font-bold uppercase tracking-wider text-black mb-1">Fabric Specifications</label><textarea name="desc" rows="2" value={newProduct.desc} onChange={handleInputChange} className="w-full bg-tassar-cream/30 border border-tassar-raw/60 p-2.5 text-xs font-bold text-black outline-none resize-none" required /></div>
+              <div><label className="block text-xs font-bold uppercase tracking-wider text-black mb-1">Fabric Specifications</label><textarea name="desc" rows="4" value={newProduct.desc} onChange={handleInputChange} className="w-full bg-tassar-cream/30 border border-tassar-raw/60 p-2.5 text-xs font-bold text-black outline-none resize-none" placeholder="Describe weave patterns, layout profiles..." required /></div>
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-black mb-1">Upload Product Photos (Multi-Select)</label>
                 <div className="w-full bg-tassar-cream/20 border border-dashed border-tassar-raw/50 p-4 text-center relative hover:bg-white transition-all">
@@ -372,7 +368,7 @@ export default function AdminDashboard() {
                   <div className="text-black font-medium text-xs flex flex-col items-center gap-1"><FiUploadCloud className="text-lg text-tassar-deepGold" /><span>{selectedFiles.length > 0 ? `${selectedFiles.length} Selected` : 'Choose photos'}</span></div>
                 </div>
               </div>
-              <button type="submit" disabled={isSubmittingProduct} className="w-full bg-tassar-earth text-tassar-cream py-3 text-xs font-bold tracking-widest uppercase hover:bg-tassar-madderRed transition-colors shadow-sm disabled:bg-neutral-400">{isSubmittingProduct ? "UPLOADING TO SUPABASE..." : "PUBLISH LIVE"}</button>
+              <button type="submit" disabled={isSubmittingProduct} className="w-full bg-tassar-earth text-tassar-cream py-3 text-xs font-bold tracking-widest uppercase hover:bg-tassar-madderRed transition-colors shadow-sm disabled:bg-neutral-400">{isSubmittingProduct ? "PUBLISHING TO CLOUD..." : "PUBLISH LIVE"}</button>
             </form>
 
             <div className="lg:col-span-8 bg-white border border-tassar-raw/40 p-5 shadow-sm overflow-x-auto">
@@ -389,12 +385,15 @@ export default function AdminDashboard() {
                           {isEditing ? (
                             <div className="space-y-1 w-full max-w-xs">
                               <input type="text" value={editFormData.name} onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })} className="bg-tassar-cream/50 border border-tassar-earth p-1.5 font-bold text-black text-xs w-full outline-none" />
-                              <textarea value={editFormData.desc} onChange={(e) => setEditFormData({ ...editFormData, desc: e.target.value })} className="bg-tassar-cream/50 border border-tassar-earth p-1.5 text-black text-xs w-full outline-none resize-none" rows="2" />
+                              <textarea value={editFormData.desc} onChange={(e) => setEditFormData({ ...editFormData, desc: e.target.value })} className="bg-tassar-cream/50 border border-tassar-earth p-1.5 text-black text-xs w-full outline-none resize-none" rows="3" />
                             </div>
                           ) : (
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 bg-tassar-cream border border-tassar-raw/40 shrink-0 flex items-center justify-center overflow-hidden font-mono text-[9px] font-bold text-tassar-earth">{product.images && product.images[0] ? <img src={product.images[0]} className="w-full h-full object-cover" /> : '[0]'}</div>
-                              <div className="text-left"><span className="font-bold text-black block truncate max-w-[140px]">{product.name}</span><span className="text-[10px] text-black font-normal block max-w-[140px] truncate mt-0.5">{product.description}</span></div>
+                              <div className="text-left">
+                                <span className="font-bold text-black block truncate max-w-[140px]">{product.name}</span>
+                                <span className="text-[10px] text-neutral-600 block max-w-[140px] truncate mt-0.5">{product.description || 'No description added'}</span>
+                              </div>
                             </div>
                           )}
                         </td>
@@ -419,11 +418,9 @@ export default function AdminDashboard() {
           </motion.div>
         )}
 
-        {/* TAB 3: HOME LAYOUT CUSTOMIZER OVER CLOUD SLOTS */}
         {activeTab === 'homeLayout' && (
           <motion.div key="hl-tab" className="space-y-12 text-left">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
               <form onSubmit={handleAddArrivalSlot} className="lg:col-span-4 bg-white border border-tassar-raw/40 p-5 shadow-sm space-y-4">
                 <div className="flex items-center gap-2 border-b border-tassar-raw/20 pb-2 text-black font-bold"><FiPlusCircle className="text-tassar-madderRed" /><h3 className="font-display uppercase tracking-wider text-sm">Add New Arrival Card</h3></div>
                 <div><label className="block text-xs font-bold text-black mb-1">Card Title / Short Specification</label><input type="text" value={newArrivalInput.name} onChange={(e) => setNewArrivalInput({ ...newArrivalInput, name: e.target.value })} placeholder="e.g., Silk Amber drape" className="w-full bg-tassar-cream/30 border border-tassar-raw/60 p-2.5 text-xs text-black font-bold outline-none" required /></div>
@@ -506,7 +503,6 @@ export default function AdminDashboard() {
           </motion.div>
         )}
 
-        {/* TAB 4: SECURE INCOMING ORDERS PIPELINE */}
         {activeTab === 'orders' && (
           <motion.div key="or-tab" className="space-y-4 text-left">
             {orders.length === 0 ? (

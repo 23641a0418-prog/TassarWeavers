@@ -14,7 +14,7 @@ export default function Cart() {
   // =========================================================================
   // PRODUCTION ADMINISTRATIVE ROUTING NODE
   // =========================================================================
-  const ADMIN_WHATSAPP_NUMBER = '919381725486'; // Your exact target cluster smartphone lines
+  const ADMIN_WHATSAPP_NUMBER = '919505610080'; // Your exact target cluster smartphone lines
 
   const handleFormChange = (e) => {
     setShippingForm({ ...shippingForm, [e.target.name]: e.target.value });

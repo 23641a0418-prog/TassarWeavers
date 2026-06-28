@@ -14,7 +14,7 @@ An elite, full-stack digital marketplace designed to bridge the gap between loca
 ## ✦ Key Architectural Modules
 
 ### 🛍️ Artisan Marketplace
-An immersive storefront featuring fluid collection sorting (`Sarees`, `Plain Cloth`, `Towels`, `Dhupattas`). It comes equipped with dynamic multi-image carousels and smooth micro-interactions that emphasize artisan textures.
+An immersive storefront featuring fluid collection sorting (`Sarees`, `Plain Cloth`, `Shawls`, `Dhothi & Pancha`). It comes equipped with dynamic multi-image carousels and smooth micro-interactions that emphasize artisan textures.
 
 ### 🧾 Context-Aware WhatsApp Checkout
 A highly optimized, serverless booking workflow that transforms stateful client cart data into itemized, high-fidelity message invoices. It securely commits data payloads to a cloud ledger before natively transitioning users to direct administrative chats (`wa.me`) with active live preview assets.
@@ -49,7 +49,7 @@ To ensure flawless application telemetry, configure your PostgreSQL database tab
   created_at   : timestamptz   (Generated Automatically)
   name         : text          (Product Title)
   price        : numeric       (Base Value)
-  category     : text          (Sarees / Plain Cloth / Towels / Dhupattas)
+  category     : text          (Sarees / Plain Cloth / Shawls / Dhoti & Pancha)
   description  : text          (Fabric Specifications)
   images       : text[]        (Array of Public CDN URLs)
   in_stock     : boolean       (Default: true)
