@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 @import 'tailwindcss';
 
@@ -14,11 +15,8 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background-image: url('/weaveing__tassarcolny_20260629_000807_826.jpg');
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
   color: #4A3E3D;
   font-family: 'Plus Jakarta Sans', sans-serif;
   overflow-x: hidden;
