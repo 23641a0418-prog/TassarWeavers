@@ -1,16 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+/* Using a modern, professional font pairing */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Outfit:wght@300;400;600&display=swap');
 
 @import 'tailwindcss';
 
 @theme {
-  --color-tassar-raw: #E6D5B8;
-  --color-tassar-earth: #4A3E3D;
-  --color-tassar-deepGold: #C5A059;
-  --color-tassar-madderRed: #8B2635;
-  --color-tassar-cream: #FBF9F5;
+  /* New Custom Color Palette: Midnight & Emerald */
+  --color-mart-dark: #0f172a;       /* Deep Midnight */
+  --color-mart-emerald: #064e3b;    /* Rich Emerald */
+  --color-mart-gold: #fbbf24;       /* Accent Gold */
+  --color-mart-stone: #f8fafc;      /* Clean Off-White */
+  --color-mart-soft: #e2e8f0;       /* Neutral Gray */
 
-  --font-display: "Playfair Display", Georgia, serif;
-  --font-sans: "Plus Jakarta Sans", Inter, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --font-sans: "Montserrat", sans-serif;
 }
 
 html {
@@ -18,11 +20,12 @@ html {
 }
 
 body {
-  background-color: #FBF9F5; /* tassar.cream */
-  color: #4A3E3D;            /* tassar.earth */
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #f8fafc; /* mart-stone */
+  color: #0f172a;            /* mart-dark */
+  font-family: 'Montserrat', sans-serif;
   overflow-x: hidden;
 }
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
